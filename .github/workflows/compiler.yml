@@ -13,17 +13,17 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
+      - name: Clone Cosmos
+        run: git clone --single-branch --branch crossplatform https://github.com/CosmosOS/Cosmos
+      - name: Clone IL2CPU
+        run: git clone https://github.com/CosmosOS/IL2CPU
+      - name: Clone X#
+        run: git clone https://github.com/CosmosOS/XSharp
+      - name: Clone Common
+        run: git clone https://github.com/CosmosOS/Common
       - name: Build Cosmos
-        run: |
-          sudo apt-get install yasm mkisofs make binutils git && \
-            cd ~ && \
-            mkdir cosmos && \
-            cd cosmos && \
-            git clone https://github.com/CosmosOS/Cosmos --depth 1 && \
-            git clone https://github.com/CosmosOS/IL2CPU --depth 1 && \
-            git clone https://github.com/CosmosOS/XSharp --depth 1 && \
-            git clone https://github.com/CosmosOS/Common --depth 1 && \
-            cd Cosmos && \
-            sudo make
+        run: cd Cosmos; make build; make install; cd ..
+      - name: Restore dependencies
+        run: dotnet restore
       - name: Build
-        run: cd flexOS && dotnet build
+        run: dotnet build --no-restore
