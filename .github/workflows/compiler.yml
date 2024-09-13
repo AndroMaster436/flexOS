@@ -9,13 +9,13 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
-      - name: Setup packages
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
-        run: sudo apt-get install make, yasm
-      - name: Clone Cosmos
+      - name: Clone Cosmos and setup packages
         run: |
+          sudo apt-get install yasm
           git clone https://github.com/CosmosOS/Cosmos
           git clone https://github.com/CosmosOS/IL2CPU
           git clone https://github.com/CosmosOS/XSharp
