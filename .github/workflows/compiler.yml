@@ -22,7 +22,7 @@ jobs:
       - name: Clone Common
         run: git clone https://github.com/CosmosOS/Common
       - name: Build Cosmos
-        run: cd Cosmos; make build; make install; cd ..
+        run: cd Cosmos; make
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
