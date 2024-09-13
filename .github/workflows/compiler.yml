@@ -5,7 +5,7 @@ on:
       branches: main
 
 jobs:
-  deploy:
+  build-and-upload:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
@@ -26,3 +26,8 @@ jobs:
         run: dotnet restore
       - name: Build
         run: sudo dotnet build --no-restore
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with: 
+          name: flexOS.iso
+          path: bin/Debug/net6.0/flexOS.iso
