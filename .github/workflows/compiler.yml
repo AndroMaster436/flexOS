@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with: 
           name: flexOS.iso
-          path: bin/Debug/net6.0/flexOS.iso
+          path: flexOS/bin/Debug/net6.0/flexOS.iso
