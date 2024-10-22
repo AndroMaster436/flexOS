@@ -11,7 +11,7 @@ namespace FlexOS
 
         public static void Init()
         {
-            networkDevice = NetworkDevice.GetDeviceByName("eth0")
+            networkDevice = NetworkDevice.GetDeviceByName("eth0");
             IPConfig.Enable(networkDevice, new Address(192, 168, 1, 64), new Address(255, 255, 255, 0), new Address(192, 128, 1, 254));
         }
     }
