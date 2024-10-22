@@ -7,14 +7,21 @@ namespace FlexOS
     {
         protected override void BeforeRun()
         {
-            Console.WriteLine("Hello World");
+            Console.WriteLine("Welcome to flexOS\nType help for command list");
         }
 
         protected override void Run()
         {
             while (true)
             {
-                // nothing
+                Console.Write("root@flexOS> ")
+                var cmd = Console.ReadLine();
+                switch (cmd)
+                {
+                    default:
+                        Console.WriteLine($"Incorrect command: {cmd}");
+                        break;
+                }
             }
         }
     }
