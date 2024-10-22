@@ -7,7 +7,7 @@ namespace FlexOS
 {
     public class DriversManager
     {
-        private NetworkDevice networkDevice;
+        private static NetworkDevice networkDevice;
 
         public static void Init()
         {

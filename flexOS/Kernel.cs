@@ -32,7 +32,7 @@ namespace FlexOS
             {
                 Console.Write("root@flexOS> ");
                 var command = Console.ReadLine();
-                string[] cmd = command.Split(" ").ToLower();
+                string[] cmd = command.Split(" ");
                 switch (cmd[0])
                 {
                     case "ping":
@@ -46,6 +46,9 @@ namespace FlexOS
                                 Console.WriteLine($"Pinged! IP: {dnsClient.Receive()}");
                             }
                         }
+                        break;
+                    case "clear":
+                        Console.Clear();
                         break;
                     default:
                         Console.WriteLine($"Incorrect command: {cmd}");
