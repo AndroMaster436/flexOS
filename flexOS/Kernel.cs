@@ -2,7 +2,6 @@ namespace FlexOS;
 
 using System;
 using Sys = Cosmos.System;
-using FlexOS.System;
 using FlexOS.Shell;
 
 public class Kernel : Sys.Kernel

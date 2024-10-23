@@ -2,7 +2,7 @@ namespace FlexOS;
 
 using System;
 
-public class BootManager
+public static class BootManager
 {
     private static int _bootMode;
 
