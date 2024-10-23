@@ -18,21 +18,15 @@ jobs:
         vs-version: '17.6'
         include-vcbuild: true
 
-    - name: Install .NET 6 SDK
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-
     - name: Install COSMOS Dev Kit (1/2)
       run: |
         git clone https://github.com/CosmosOS/Cosmos.git --depth 1
         cd Cosmos
-        dir
       shell: pwsh
     
     - name: Install COSMOS Dev Kit (2/2)
       run: |
-          cd D:\a\VivDOS-NET\VivDOS-NET\Cosmos
+          cd D:\a\flexOS\flexOS\Cosmos
           dir
           install-VS2022.bat
       shell: cmd
