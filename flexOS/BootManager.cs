@@ -17,13 +17,13 @@ public static class BootManager
         while (_bootMode == 0)
         {
             Console.Write("Boot:");
-            var choose = Console.ReadKey().KeyChair;
+            var choose = Console.ReadKey().KeyChar;
             if (choose == '1') _bootMode = 2;
             else if (choose == '2') _bootMode = 2;
         }
     }
 
-    public static int GetBootMenu()
+    public static int GetBootMode()
     {
         return _bootMode;
     }
