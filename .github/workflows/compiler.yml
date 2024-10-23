@@ -2,20 +2,32 @@ name: OSCompiler
 
 on:
   push:
-    branches: main
+      branches: main
 
 jobs:
   build-and-upload:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install Cosmos
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Clone Cosmos and setup packages
         run: |
-          wget https://github.com/PratyushKing/cosmosCLI/releases/download/v1.3.1-stable/cosmos.deb
-          sudo dpkg -i cosmos.deb
-          ls
-          cd flexOS && cosmos --reinstall
-    
+          sudo apt-get install yasm
+          git clone https://github.com/CosmosOS/Cosmos
+          git clone https://github.com/CosmosOS/IL2CPU
+          git clone https://github.com/CosmosOS/XSharp
+          git clone https://github.com/CosmosOS/Common
+      - name: Build Cosmos
+        run: cd Cosmos; make
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: sudo dotnet build --no-restore
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with: 
+          name: flexOS.iso
+          path: flexOS/bin/Debug/net6.0/flexOS.iso
