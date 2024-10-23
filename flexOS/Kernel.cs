@@ -1,18 +1,24 @@
+namespace FlexOS;
+
 using System;
 using Sys = Cosmos.System;
-using Cosmos.System.Network.IPv4.UDP.DNS;
-using Cosmos.System.Network.IPv4;
-using System.Runtime.InteropServices;
-using System.Net.Sockets;
-using System.Text;
+using FlexOS.System;
+using FlexOS.Shell;
 
-namespace FlexOS
+public class Kernel : Sys.Kernel
 {
-    public class Kernel : Sys.Kernel
+    protected override void BeforeRun()
     {
-        protected override void BeforeRun()
+        BootManager.Init();
+        DriversManager.Init();
+        CommandManager.Init();
+    }
+
+    protected override void Run()
+    {
+        var bootMode = BootManager.GetBootMode();
+        if (bootMode == 2)
         {
-            DriversManager.Init();
             Console.Clear();
             Console.WriteLine(@"
    __ _            ____   _____ 
@@ -24,36 +30,12 @@ namespace FlexOS
                                 
                                 ");
             Console.WriteLine("Welcome to flexOS\nType help for command list\n");
-        }
-
-        protected override void Run()
-        {
             while (true)
             {
                 Console.Write("root@flexOS> ");
                 var command = Console.ReadLine();
                 string[] cmd = command.Split(" ");
-                switch (cmd[0])
-                {
-                    case "ping":
-                        if (cmd.Length == 1) Console.WriteLine("Usage: ping [SITE]");
-                        else
-                        {
-                            using (var dnsClient = new DnsClient())
-                            {
-                                dnsClient.Connect(new Address(8, 8, 8, 8));
-                                dnsClient.SendAsk(cmd[1]);
-                                Console.WriteLine($"Pinged! IP: {dnsClient.Receive()}");
-                            }
-                        }
-                        break;
-                    case "clear":
-                        Console.Clear();
-                        break;
-                    default:
-                        Console.WriteLine($"Incorrect command: {cmd}");
-                        break;
-                }
+                CommandManager.ExecuteCommand(cmd);
             }
         }
     }
