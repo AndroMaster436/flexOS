@@ -1,6 +1,7 @@
 namespace FlexOS;
 
 using System;
+using System.Text;
 using Sys = Cosmos.System;
 using FlexOS.Shell;
 
