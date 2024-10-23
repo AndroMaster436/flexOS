@@ -14,13 +14,6 @@ jobs:
 
       - name: Install Cosmos
         run: |
-          sudo add-apt-repository ppa:dotnet/backports
-          sudo apt update
-          sudo apt install -y yasm
-          git clone https://github.com/CosmosOS/Cosmos.git
-          cd Cosmos
-          make
-          cd ..
           wget https://github.com/PratyushKing/cosmosCLI/releases/download/v1.3.1-stable/cosmos.deb
           sudo dpkg -i cosmos.deb
     
