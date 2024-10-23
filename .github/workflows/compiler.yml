@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-upload:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -14,25 +14,25 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
+      
+      - name: Install dependencies
+        run: sudo apt-get install yasm
 
-      - name: Install Cosmos User Kit
+      - name: Restore dependencies and install Cosmos.Build.Builder
         run: |
-          powershell -Command "Invoke-WebRequest -Uri https://api.github.com/repos/CosmosOS/Cosmos/releases/latest -OutFile cosmos.zip"
-          powershell -Command "Expand-Archive cosmos.zip -DestinationPath C:\Cosmos"
-          powershell -Command "C:\Cosmos\install-vs2019.bat"
+          dotnet new tool-manifest
+          dotnet tool install Cosmos.Build.Builder --version 2023.6.3 # Устанавливаем Cosmos
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build
-
-      - name: Cosmos Build
+      - name: Build flexOS
         run: |
-          C:\Cosmos\build.bat --project flexOS.csproj
+          dotnet restore
+          dotnet build
+
+      - name: Run Cosmos Build
+        run: dotnet cosmos build
 
       - name: Upload ISO
         uses: actions/upload-artifact@v3
-        with:
+        with: 
           name: flexOS.iso
-          path: path\to\flexOS.iso
+          path: bin/Debug/net6.0/flexOS.iso
