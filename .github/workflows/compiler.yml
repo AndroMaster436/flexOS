@@ -26,11 +26,9 @@ jobs:
     
     - name: Install COSMOS Dev Kit (2/2)
       run: |
-          cd D:\a\flexOS\flexOS\Cosmos
-          dir
-          install-VS2022.bat
+        cd D:\a\flexOS\flexOS\Cosmos
+        install-VS2022.bat
       shell: cmd
 
-    - name: Restore NuGet packages
-      run: nuget restore VivDOS.sln
-      shell: pwsh
+    - name: Build ISO
+      run: msbuild /p:Configuration=Release flexOS.sln
