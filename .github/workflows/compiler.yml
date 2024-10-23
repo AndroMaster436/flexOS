@@ -6,33 +6,37 @@ on:
 
 jobs:
   build-and-upload:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-      
-      - name: Install dependencies
-        run: sudo apt-get install yasm
+    - name: Install Visual Studio Build Tools
+      uses: microsoft/setup-msbuild@v1
+      with:
+        vs-version: '17.6'
+        include-vcbuild: true
 
-      - name: Restore dependencies and install Cosmos.Build.Builder
-        run: |
-          dotnet new tool-manifest
-          dotnet tool install Cosmos.Build.Builder --version 2023.6.3 # Устанавливаем Cosmos
+    - name: Install .NET 6 SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
 
-      - name: Build flexOS
-        run: |
-          dotnet restore
-          dotnet build
+    - name: Install COSMOS Dev Kit (1/2)
+      run: |
+        git clone https://github.com/CosmosOS/Cosmos.git --depth 1
+        cd Cosmos
+        dir
+      shell: pwsh
+    
+    - name: Install COSMOS Dev Kit (2/2)
+      run: |
+          cd D:\a\VivDOS-NET\VivDOS-NET\Cosmos
+          dir
+          install-VS2022.bat
+      shell: cmd
 
-      - name: Run Cosmos Build
-        run: dotnet cosmos build
-
-      - name: Upload ISO
-        uses: actions/upload-artifact@v3
-        with: 
-          name: flexOS.iso
-          path: bin/Debug/net6.0/flexOS.iso
+    - name: Restore NuGet packages
+      run: nuget restore VivDOS.sln
+      shell: pwsh
