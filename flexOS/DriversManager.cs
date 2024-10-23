@@ -1,6 +1,6 @@
-namespace FlexOS;
-
 using FlexOS.Drivers;
+
+namespace FlexOS;
 
 public static class DriversManager
 {

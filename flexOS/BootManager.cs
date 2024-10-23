@@ -1,6 +1,6 @@
-namespace FlexOS;
-
 using System;
+
+namespace FlexOS;
 
 public static class BootManager
 {

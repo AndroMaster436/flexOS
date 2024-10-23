@@ -1,8 +1,8 @@
-namespace FlexOS.Drivers;
-
 using Cosmos.HAL;
 using Cosmos.System.Network.Config;
 using Cosmos.System.Network.IPv4;
+
+namespace FlexOS.Drivers;
 
 public static class Network
 {
