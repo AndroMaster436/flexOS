@@ -16,4 +16,6 @@ jobs:
         run: |
           wget https://github.com/PratyushKing/cosmosCLI/releases/download/v1.3.1-stable/cosmos.deb
           sudo dpkg -i cosmos.deb
+          ls
+          cosmos -b
     
