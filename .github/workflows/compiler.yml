@@ -6,26 +6,21 @@ on:
 
 jobs:
   build-and-upload:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Install Visual Studio Build Tools
-      uses: microsoft/setup-msbuild@v1
-      with:
-        vs-version: '17.6'
-        include-vcbuild: true
-
-    - name: Install COSMOS Dev Kit
-      run: |
-        git clone https://github.com/CosmosOS/Cosmos.git --depth 1
-        cd Cosmos
-        install-VS2022.bat
-      shell: cmd
-
-    - name: Build ISO
-      run: |
-        nuget restore flexOS.sln
-        msbuild /p:Configuration=Release flexOS.sln
+      - name: Install Cosmos
+        run: |
+          sudo add-apt-repository ppa:dotnet/backports
+          sudo apt update
+          sudo apt install -y yasm
+          git clone https://github.com/CosmosOS/Cosmos.git
+          cd Cosmos
+          make
+          cd ..
+          wget https://github.com/PratyushKing/cosmosCLI/releases/download/v1.3.1-stable/cosmos.deb
+          sudo dpkg -i cosmos.deb
+    
