@@ -1,7 +1,5 @@
 namespace FlexOS;
 
-using System;
-using System.Text;
 using Sys = Cosmos.System;
 using FlexOS.Shell;
 
@@ -19,8 +17,8 @@ public class Kernel : Sys.Kernel
         var bootMode = BootManager.GetBootMode();
         if (bootMode == 2)
         {
-            Console.Clear();
-            Console.WriteLine(@"
+            System.Console.Clear();
+            System.Console.WriteLine(@"
    __ _            ____   _____ 
   / _| |          / __ \ / ____|
  | |_| | _____  _| |  | | (___  
@@ -29,11 +27,11 @@ public class Kernel : Sys.Kernel
  |_| |_|\___/_/\_\\____/|_____/ 
                                 
                                 ");
-            Console.WriteLine("Welcome to flexOS\nType help for command list\n");
+            System.Console.WriteLine("Welcome to flexOS\nType help for command list\n");
             while (true)
             {
-                Console.Write("root@flexOS> ");
-                var command = Console.ReadLine();
+                System.Console.Write("root@flexOS> ");
+                var command = System.Console.ReadLine();
                 string[] cmd = command.Split(" ");
                 CommandManager.ExecuteCommand(cmd);
             }
