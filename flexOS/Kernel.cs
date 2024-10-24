@@ -2,7 +2,7 @@ namespace FlexOS;
 
 using System;
 using Sys = Cosmos.System;
-using FlexOS.Shell;
+using System.Reflection;
 
 public class Kernel : Sys.Kernel
 {
@@ -10,7 +10,6 @@ public class Kernel : Sys.Kernel
     {
         BootManager.Init();
         DriversManager.Init();
-        CommandManager.Init();
     }
 
     protected override void Run()
@@ -32,9 +31,19 @@ public class Kernel : Sys.Kernel
             while (true)
             {
                 Console.Write("root@flexOS> ");
-                var command = Console.ReadLine();
+                var command = Console.ReadLine();\
+                if (command == null)
+                {
+                    Console.WriteLine("Bad command");
+                    continue;
+                }
                 string[] cmd = command.Split(" ");
-                CommandManager.ExecuteCommand(cmd);
+                var type = Type.GetType("FlexOS.Shell." + char.ToUpper(command[0]));
+                if (type != null)
+                {
+                    var method = type.GetMethod("Execute", BindingFlags.Public | BindingFlags.Static);
+                    method.Invoke(null, null);
+                }
             }
         }
     }
