@@ -31,7 +31,7 @@ public class Kernel : Sys.Kernel
             while (true)
             {
                 Console.Write("root@flexOS> ");
-                var command = Console.ReadLine();\
+                var command = Console.ReadLine();
                 if (command == null)
                 {
                     Console.WriteLine("Bad command");
