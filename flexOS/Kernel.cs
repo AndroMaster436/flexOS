@@ -3,6 +3,7 @@ namespace FlexOS;
 using System;
 using Sys = Cosmos.System;
 using System.Reflection;
+using Microsoft.VisualBasic;
 
 public class Kernel : Sys.Kernel
 {
@@ -32,17 +33,16 @@ public class Kernel : Sys.Kernel
             {
                 Console.Write("root@flexOS> ");
                 var command = Console.ReadLine();
-                if (command == null)
-                {
-                    Console.WriteLine("Bad command");
-                    continue;
-                }
+                if (command == null) continue;
                 string[] cmd = command.Split(" ");
-                var type = Type.GetType("FlexOS.Shell." + char.ToUpper(command[0]));
-                if (type != null)
+                if (true)
                 {
-                    var method = type.GetMethod("Execute", BindingFlags.Public | BindingFlags.Static);
-                    method.Invoke(null, null);
+                    // Todo
+                }
+                else
+                {
+                    Console.WriteLine($"Unknown command: {cmd[0]}");
+                    continue;
                 }
             }
         }
